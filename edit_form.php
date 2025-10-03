@@ -15,34 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Enrol key block caps.
+ * Block edit form class for the block_enrolkey plugin.
  *
- * @package    block_enrolkey
+ * @package block_enrolkey
  * @copyright  Gleimer Mora <gleimermora@catalyst-au.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-
-$capabilities = [
-    'block/enrolkey:myaddinstance' => [
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => [
-            'user' => CAP_ALLOW,
-        ],
-
-        'clonepermissionsfrom' => 'moodle/my:manageblocks',
-    ],
-
-    'block/enrolkey:addinstance' => [
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
-
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_BLOCK,
-        'archetypes' => [
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW,
-        ],
-    ],
-];
+class block_enrolkey_edit_form extends block_edit_form {
+    /**
+     * Setup block settings edit form
+     *
+     * @param MoodleQuickForm $mform
+     * @return void
+     */
+    protected function specific_definition($mform) {
+        // Section header title according to language file.
+        $mform->addElement('header', 'config_header', get_string('blocksettings', 'block'));
+        // A sample string variable with a default value.
+        $mform->addElement('text', 'config_title', get_string('configtitle', 'block_enrolkey'));
+        $mform->setDefault('config_title', get_string('configtitle_default', 'block_enrolkey'));
+        $mform->setType('config_title', PARAM_TEXT);
+    }
+}
